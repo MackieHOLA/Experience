@@ -1,0 +1,42 @@
+最近自己在学习spring&&hibernate框架的时候，因为总是要调试输出一些信息，
+所以以前的方式是自己在相应的位置添加System.out.println(..)；的相应语句，
+但是这要会造成不知道这个错误出现在哪个类中，无法知道前后语句执行的时间差（虽然可以通过
+System.currentTimeInMills()来获得，但是语句的插入带来整体的不美观。
+所以开始使用Log4j提供的日志输出功能。
+
+通过日志的输出；
+我们可以知道这是TestLog4j类的日志；
+知道这是main线程的日志；
+而且日志级别可以观察，一共有六个级别，分别为TRACE,DEBUG,INFO,WARN,ERROR,FATAL(从低到高）；
+而且日志的输出范围可以控制，可以设置相应的级别，就可以使其他级别的不可以输出日志；
+而且每句日志前面自动标识了每句日志消耗的毫秒数。
+
+example：
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+/**
+ * Created by Mackie on 2017/7/12.
+ */
+public class Log4jTest {
+    static Logger logger = Logger.getLogger(Log4jTest.class);//基于类的级别获得日志对象
+    public static void main(String[] args)throws InterruptedException
+    {
+        BasicConfigurator.configure();//进行默认配置
+        logger.setLevel(Level.DEBUG);//设置日志输出级别
+        logger.trace("跟踪信息");
+        logger.debug("调试信息");
+        logger.info("输出信息");
+        Thread.sleep(1000);
+        logger.warn("警告信息");
+        logger.error("错误信息");
+        logger.fatal("致命信息");
+    }
+}
+
+Output：
+0 [main] DEBUG Log4j.Log4jTest  - 调试信息
+2 [main] INFO Log4j.Log4jTest  - 输出信息
+1002 [main] WARN Log4j.Log4jTest  - 警告信息
+1002 [main] ERROR Log4j.Log4jTest  - 错误信息
+1002 [main] FATAL Log4j.Log4jTest  - 致命信息
