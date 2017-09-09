@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+       .front,.back{
+           -webkit-backface-visibility: hidden;
+           position: absolute;
+           left: 0px;
+           top:0px;
+           width:200px;
+           height: 200px;
+       }
+       .container{
+           -webkit-perspective: 1000px;
+           transition: 1s;
+           -webkit-transform-style: preserve-3d;（很关键)
+       }
+       .container:hover{
+           -webkit-transform: rotateY(-180deg); (注意hover的使用)
+       }
+        .container{
+            position: relative;
+            width:200px;
+            height: 200px;
+        }
+        .front{
+            background-color: blue;
+            z-index: 2;
+        }
+        .back{
+            background-color: yellow;
+            -webkit-transform: rotateY(180deg);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="front">
+            前面
+        </div>
+        <div class="back">
+            后面
+        </div>
+    </div>
+</body>
+</html>
